@@ -15,7 +15,7 @@ spec:
 ) {
     node(POD_LABEL) { 
       container('busybox') {
-        sh "hostname ; sleep 10"
+        sh "hostname ; sleep 30"
       }
     }
 }
