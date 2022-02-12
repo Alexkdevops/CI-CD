@@ -10,7 +10,7 @@ nginx:
 	@echo "Testing Nginx"
 	@curl http://localhost:80
 
-build:nginx
+build:
 	@docker build -t $(repo):$(ver) .
 
 login:
