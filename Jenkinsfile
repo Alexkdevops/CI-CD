@@ -6,20 +6,48 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
-  - name: busybox
-    image: busybox
+  - name: jenkins-slave
+    image: mshaibek/jenkins-slave-312
     command:
     - cat
-    tty: true  
+    tty: true
+    env:
+    - name: DOCKER_HOST
+      value: 'tcp://localhost:2375'
+  - name: dind-daemon
+    image: 'docker:18-dind'
+    command:
+    - dockerd-entrypoint.sh
+    tty: true
+    securityContext:
+      privileged: true    
 """
 ) {
     node(POD_LABEL) { 
-      container('busybox') {
+      container('jenkins-slave') {
         sh '''
-        hostname
-        sleep 30
-        echo "done"
+        export AWS_DEFAULT_REGION=us-east-2
+        make build
+        make push
         '''
       }
     }
 }
+// ) {
+//     node(POD_LABEL) {
+//       // This is trigger for webhook in github!  
+//       properties([
+// 	    pipelineTriggers([
+//           [$class: 'GitHubPushTrigger'],
+//           pollSCM('*/1 * * * *'),
+// 	      ])
+// 	    ])  
+//       checkout scm  
+//       container('jenkins-slave') {
+//         // sh "hostname ; sleep 5"
+//         sh '''
+//         ./deploy.sh
+//         '''
+//       }
+//     }
+// }

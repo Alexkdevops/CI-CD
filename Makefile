@@ -1,4 +1,4 @@
-ver = 1.0
+ver = 1.1
 acct = $(shell aws sts get-caller-identity --query "Account" --output text)
 reg = us-east-2
 repo = nginxapp
@@ -10,10 +10,10 @@ nginx:
 	@echo "Testing Nginx"
 	@curl http://localhost:80
 
-build:
+build:nginx
 	@docker build -t $(repo):$(ver) .
 
-login:build
+login:
 	@aws ecr get-login-password --region $(reg) | docker login --username AWS --password-stdin $(acct).dkr.ecr.$(reg).amazonaws.com
 
 push:login
