@@ -26,6 +26,10 @@ spec:
     node(POD_LABEL) { 
       container('jenkins-slave') {
         sh '''
+        sleep 10
+        touch test
+        echo "test" > test
+        sleep 10
         ./deploy.sh
         '''
       }
