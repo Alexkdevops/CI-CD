@@ -27,7 +27,7 @@ spec:
       container('jenkins-slave') {
         sh '''
         export AWS_DEFAULT_REGION=us-east-2
-        cd CI-CD
+        cd CI-CD/
         make build
         make push
         cd ..
