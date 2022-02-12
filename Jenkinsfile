@@ -24,6 +24,7 @@ spec:
 """
 ) {
     node(POD_LABEL) { 
+      checkout scm
       container('jenkins-slave') {
         sh '''
         sleep 10
