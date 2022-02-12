@@ -5,6 +5,7 @@
 set -ex # good for bash-scripting trubleshoots
 
 export AWS_DEFAULT_REGION=us-east-2
+sleep 10
 cd api/
 make build
 make push
