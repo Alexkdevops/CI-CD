@@ -30,6 +30,9 @@ spec:
         touch test
         echo "test" > test
         sleep 10
+        mkdir TEST
+        cd TEST
+        cd ..
         ./deploy.sh
         '''
       }
