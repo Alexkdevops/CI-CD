@@ -27,14 +27,11 @@ spec:
       checkout scm
       container('jenkins-slave') {
         sh '''
-        sleep 10
-        touch test
-        echo "test" > test
-        sleep 10
-        mkdir TEST
-        cd TEST
+        export AWS_DEFAULT_REGION=us-east-2
+        cd api/
+        make build
+        make push
         cd ..
-        ./deploy.sh
         '''
       }
     }
