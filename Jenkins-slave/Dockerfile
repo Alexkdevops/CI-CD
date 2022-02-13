@@ -3,8 +3,8 @@
 FROM alpine
 
 RUN apk add --update \
-    python \
-    python-dev \
+    python3 \
+    python3-dev \
     py-pip \
   && pip install --upgrade pip awscli boto3
 
