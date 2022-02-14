@@ -32,6 +32,10 @@ spec:
         make build
         make push
         cd ..
+        cd web/
+        make build
+        make push
+        cd ..
         '''
       }
     }
