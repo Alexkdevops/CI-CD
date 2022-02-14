@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: NAMESPACE
+  # name: NAMESPACE
+  name: api
 
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
-  namespace: NAMESPACE
+  name: alex-api
+  namespace: api
   labels:
     app: api
 spec:
@@ -23,7 +24,8 @@ spec:
         app: api
     spec:
       containers:
-      - name: api
-        image: ACCT.dkr.ecr.REG.amazonaws.com/REPO:VER
+      - name: alex-api
+        # image: ACCT.dkr.ecr.REG.amazonaws.com/REPO:VER
+        image: 604269064751.dkr.ecr.us-east-2.amazonaws.com/api:1.0
         ports:
         - containerPort: 80
