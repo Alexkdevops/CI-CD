@@ -24,6 +24,6 @@ spec:
     spec:
       containers:
       - name: api
-        image: ACCT.dkr.ecr.REG.amazonaws.com/apiapp:VER
+        image: ACCT.dkr.ecr.REG.amazonaws.com/REPO:VER
         ports:
         - containerPort: 80
