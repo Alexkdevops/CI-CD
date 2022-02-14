@@ -8,10 +8,9 @@ login:
 	@aws ecr get-login-password --region $(reg) | docker login --username AWS --password-stdin $(acct).dkr.ecr.$(reg).amazonaws.com
 
 build:login
-	@docker build -t $(repo):$(ver) .
+	@docker build -t $(image) .
 
 push:build
-	@docker tag $(repo):$(ver) $(acct).dkr.ecr.$(reg).amazonaws.com/$(repo):$(ver)
 	@docker push $(image)
 
 deploy:
