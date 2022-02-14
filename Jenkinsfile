@@ -34,8 +34,9 @@ spec:
         sh '''
         export AWS_DEFAULT_REGION=us-east-2
         cd api/
-        make login
-        make build
+        make push
+        cd ..
+        cd web/
         make push
         cd ..
         '''
