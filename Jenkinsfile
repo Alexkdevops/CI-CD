@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: jenkins-slave
-    image: alexkdevops/jenkins:1.0
+    image: mshaibek/jenkins-312:latest
     command:
     - cat
     tty: true
@@ -40,6 +40,7 @@ spec:
       }
     }
 }
+// image: alexkdevops/jenkins:1.0
 // ) {
 //     node(POD_LABEL) {
 //       // This is trigger for webhook in github!  
