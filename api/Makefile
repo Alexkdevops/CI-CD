@@ -1,4 +1,4 @@
-ver = 1.2
+ver = 2.0
 acct = $(shell aws sts get-caller-identity --query "Account" --output text)
 reg = us-east-2
 repo = apiapp
