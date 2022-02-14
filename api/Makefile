@@ -1,7 +1,7 @@
-ver = 2.0
+ver = 1.0
 acct = $(shell aws sts get-caller-identity --query "Account" --output text)
 reg = us-east-2
-repo = apiapp
+repo = api
 image = $(acct).dkr.ecr.$(reg).amazonaws.com/$(repo):$(ver) 
 
 login:
@@ -13,6 +13,9 @@ build:login
 push:build
 	@docker tag $(repo):$(ver) $(acct).dkr.ecr.$(reg).amazonaws.com/$(repo):$(ver)
 	@docker push $(image)
+
+deploy:
+	@cat deployment.yaml | sed "s|VER|$(ver)|g; s|NAMESPACE|$(repo)|g; s|ACCT|$(acct)|g; s|REG|$(reg)|g" | kubectl apply -f -
 
 
 
