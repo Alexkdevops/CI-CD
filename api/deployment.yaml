@@ -26,6 +26,6 @@ spec:
       containers:
       - name: alex-api
         # image: ACCT.dkr.ecr.REG.amazonaws.com/REPO:VER
-        image: 604269064751.dkr.ecr.us-east-2.amazonaws.com/api:1.0
+        image: nginx
         ports:
         - containerPort: 80
