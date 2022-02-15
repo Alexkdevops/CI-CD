@@ -7,7 +7,8 @@ metadata:
 spec:
   containers:
   - name: jenkins-slave
-    image: alexkdevops/jenkins:1.0
+    image: mshaibek/jenkins-312:latest
+    imagePullPolicy: Always
     command:
     - cat
     tty: true
