@@ -1,0 +1,4 @@
+namespace = prod
+repo = web
+ver = 1.1
+reg = us-east-2

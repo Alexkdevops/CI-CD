@@ -1,6 +1,6 @@
 #!/bin/bash
 export AWS_DEFAULT_REGION=us-east-2
-set -e
+set -ex
 
 if [[ $BRANCH_NAME == main ]]
 then
