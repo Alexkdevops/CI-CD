@@ -37,6 +37,9 @@ spec:
         cd api/
         make deploy
         cd ..
+        cd web/
+        make deploy
+        cd ..
         '''
       }
     }
