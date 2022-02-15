@@ -56,7 +56,7 @@ spec:
         - name: PORT
           value: "80"
         - name: DB
-          valueFROM:
+          valueFrom:
             secretKeyRef:
               name: secret
               key: db-endpoint
