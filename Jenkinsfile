@@ -36,7 +36,6 @@ spec:
         export AWS_DEFAULT_REGION=us-east-2
         cd api/
         make push
-        kubectl run nginx --image=nginx
         cd ..
         cd web/
         make push
