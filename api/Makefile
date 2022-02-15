@@ -15,7 +15,7 @@ push: build
 	@docker push $(image)
 
 deploy: push
-	@echo "deploys into $(namespace) environment"
+	@echo "deploys into $(namespace) environment!"
 	@cat deployment.yaml | sed "s|VER|$(ver)|g; s|NAMESPACE|$(namespace)|g; s|ACCT|$(acct)|g; s|REG|$(reg)|g; s|REPO|$(repo)|g" | kubectl apply -f -
 
 
