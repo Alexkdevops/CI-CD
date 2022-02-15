@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: jenkins-slave
-    image: mshaibek/jenkins-slave-312
+    image: alexkdevops/jenkins:1.0
     imagePullPolicy: Always
     command:
     - cat
@@ -45,6 +45,7 @@ spec:
     }
 }
 // image: alexkdevops/jenkins:1.0
+//  mshaibek/jenkins-slave-312
 // ) {
 //     node(POD_LABEL) {
 //       // This is trigger for webhook in github!  
