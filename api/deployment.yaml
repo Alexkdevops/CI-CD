@@ -8,7 +8,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-pod
+  name: api-deployment
   namespace: NAMESPACE
   labels:
     app: api
@@ -23,7 +23,7 @@ spec:
         app: api
     spec:
       containers:
-      - name: api-container
+      - name: api-pod
         image: ACCT.dkr.ecr.REG.amazonaws.com/REPO:VER
         ports:
         - containerPort: 80
