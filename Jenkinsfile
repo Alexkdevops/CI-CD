@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: jenkins-slave
-    image: mshaibek/jenkins-slave-312
+    image: alexkdevops/jenkins-slave
     imagePullPolicy: Always
     command:
     - cat
