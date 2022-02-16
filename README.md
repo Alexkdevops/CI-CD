@@ -1,3 +1,3 @@
 # CI-CD
 using Jenkins
-checking GitHub
+checking GitHub.
