@@ -3,7 +3,7 @@ pipeline {
     kubernetes {
       idleMinutes 10
       defaultContainer 'jenkins-slave'
-      yamlFile 'jenkins-pod.yaml'
+      yamlFile 'jenkins-slave.yaml'
     }
   }
 //   environment {
@@ -11,21 +11,21 @@ pipeline {
 //     MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
 //   }
   stages {
-    stage ('Initialize the enviromnet') {
+    stage ('Manage the Environment') {
       steps {
         script {
           if (env.GIT_BRANCH == 'dev') {
-            stage ('Stage: dev') {
+            stage ('Stage: Development') {
                 env.STAGE = 'dev'
                 sh 'echo ${STAGE}'
             }
           } else if (env.GIT_BRANCH == 'main') {
-            stage ('Stage: main') {
+            stage ('Stage: Main') {
                 env.STAGE = 'main'
                 sh 'echo ${STAGE}'
             } 
           } else {
-            stage ('Stage: prod') {
+            stage ('Stage: Production') {
                 env.STAGE = 'prod'
                 sh 'echo ${STAGE}'
             }
@@ -33,7 +33,7 @@ pipeline {
         }
       }
     }
-    stage('Build containers') {
+    stage('Container image build') {
       steps {
         dir('api') {
           sh 'make build'
@@ -61,16 +61,16 @@ pipeline {
     //             }
     //         }
     //     }
-    stage('Push artifacts') {
+    stage('Push to Repo') {
             parallel {
-                stage('Push api') {
+                stage('Push to api') {
                     steps {
                       dir('api') {
                         sh 'make push'
                       }
                     }
                 }
-                stage('Push web') {
+                stage('Push to web') {
                     steps {
                         dir('web') {
                           sh 'make push'
