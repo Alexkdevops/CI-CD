@@ -1,10 +1,34 @@
 #Default image used for deployment
 
+FROM tiangolo/meinheld-gunicorn:python3.7-alpine3.8
+ENV PYTHONUNBUFFERED 1
+RUN set -e; \
+        apk add --no-cache --virtual .build-deps \
+                gcc \
+                libc-dev \
+                linux-headers \
+                mariadb-dev \
+                python3-dev \
+                postgresql-dev \
+        ;
 
-FROM debian:latest
+RUN mkdir /backend
+WORKDIR /backend
 
-RUN apt-get update
-RUN apt-get install nginx -y
-EXPOSE 80
+COPY requirements.txt /backend/
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY . /backend/
+
+EXPOSE 8080
+CMD ["/bin/bash"]
+ENTRYPOINT gunicorn -w 4 main.wsgi:application -b 0.0.0.0:8080
+
+
+# FROM debian:latest
+
+# RUN apt-get update
+# RUN apt-get install nginx -y
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
