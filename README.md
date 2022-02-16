@@ -1,3 +1,4 @@
 # CI-CD
-using Jenkins
-checking GitHub.
+using Jenkins - working thru Jenkinsfile
+checking GitHub - webhook setup
+new
