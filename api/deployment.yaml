@@ -3,6 +3,31 @@ kind: Namespace
 metadata:
   name: NAMESPACE
 
+---
+# For DataBase conection
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret
+  namespace: NAMESPACE
+type: Opaque
+data:
+  db-enpoint: cG9zdGdyZXM6Ly9hZG1pbjpiODRuZGRmdzByMzRobEByZHMtcG9zdGdyZXMtY2x1c3Rlci1mdmZkZGYuYW1hem9uYXdzLmNvbS9leGNoYW5nZWRi #endpoint for database connection
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: NAMESPACE
+  name: backend-api-svc
+spec:
+  selector:
+    app: api-deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
 
 ---
 apiVersion: apps/v1
@@ -27,3 +52,11 @@ spec:
         image: ACCT.dkr.ecr.REG.amazonaws.com/REPO:VER
         ports:
         - containerPort: 80
+        env:
+        - name: PORT
+          value: "80"
+        - name: DB
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: db-endpoint
