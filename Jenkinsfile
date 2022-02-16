@@ -1,41 +1,106 @@
-podTemplate(yaml: """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
-spec:
-  containers:
-  - name: jenkins-slave
-    image: alexkdevops/jenkins-new 
-    imagePullPolicy: Always
-    command:
-    - cat
-    tty: true
-    env:
-    - name: DOCKER_HOST
-      value: 'tcp://localhost:2375'
-  - name: dind-daemon
-    image: 'docker:18-dind'
-    command:
-    - dockerd-entrypoint.sh
-    tty: true
-    securityContext:
-      privileged: true    
-"""
-) {
-    node(POD_LABEL) {  
-      properties([
-	    pipelineTriggers([
-          [$class: 'GitHubPushTrigger'],
-          pollSCM('*/1 * * * *'),
-	      ])
-	    ])       
-      checkout scm
-      container('jenkins-slave') {
-        sh '''
-        ./deploy.sh
-        '''
+pipeline {
+  agent {
+    kubernetes {
+      idleMinutes 5
+      defaultContainer 'jenkins-slave'
+      yamlFile 'jenkins-pod.yaml'
+    }
+  }
+//   environment {
+//     MYSQL_USER     = credentials('MYSQL_USER')
+//     MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
+//   }
+  stages {
+    stage ('Initialize the enviromnet') {
+      steps {
+        script {
+          if (env.GIT_BRANCH == 'dev') {
+            stage ('Stage: dev') {
+                env.STAGE = 'dev'
+                sh 'echo ${STAGE}'
+            }
+          } else if (env.GIT_BRANCH == 'main') {
+            stage ('Stage: main') {
+                env.STAGE = 'main'
+                sh 'echo ${STAGE}'
+            } 
+          } else {
+            stage ('Stage: prod') {
+                env.STAGE = 'prod'
+                sh 'echo ${STAGE}'
+            }
+          }            
+        }
       }
     }
+    stage('Build containers') {
+      steps {
+        dir('api') {
+          sh 'make build'
+        }
+        dir('web') {
+          sh 'make build'
+        }
+      }
+    }
+    // stage('Run tests') {
+    //         parallel {
+    //             stage('Backend unit test') {
+    //                 steps {
+    //                   dir('backend') {
+    //                     sh 'make test'
+    //                   }
+    //                 }
+    //             }
+    //             stage('Frontend unit tests') {
+    //                 steps {
+    //                     dir('frontend') {
+    //                       sh 'yarn test --watchAll=false --coverage --silent'
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    stage('Push artifacts') {
+            parallel {
+                stage('Push api') {
+                    steps {
+                      dir('api') {
+                        sh 'make push'
+                      }
+                    }
+                }
+                stage('Push web') {
+                    steps {
+                        dir('web') {
+                          sh 'make push'
+                        }
+                    }
+                }
+            }
+        }
+    stage('Deploy to the EKS cluster') {
+            parallel {
+                stage('Deploy api') {
+                    steps {
+                      dir('api') {
+                        sh 'make deploy'
+                      }
+                    }
+                }
+                stage('Deploy web') {
+                    steps {
+                        dir('web') {
+                          sh 'make deploy'
+                        }
+                    }
+                }
+            }
+        }
+  }
+  post {
+      always {
+         sh "docker system prune -a --volumes -f"
+      }
+   }
 }
