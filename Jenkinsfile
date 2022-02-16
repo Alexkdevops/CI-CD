@@ -5,10 +5,6 @@ pipeline {
       yamlFile 'jenkins-slave.yaml'
     }
   }
-//   environment {
-//     MYSQL_USER     = credentials('MYSQL_USER')
-//     MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
-//   }
   stages {
     stage ('Manage the Environment') {
       steps {
@@ -97,9 +93,4 @@ pipeline {
             }
         }
   }
-  post {
-      always {
-         sh "docker system prune -a --volumes -f"
-      }
-   }
 }
