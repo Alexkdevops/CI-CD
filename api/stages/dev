@@ -1,4 +1,4 @@
-namespace = prod
+namespace = dev
 repo = api
 ver = 2.0
 reg = us-east-2
