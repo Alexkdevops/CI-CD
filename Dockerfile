@@ -1,4 +1,5 @@
 # Custome image of Jenkins-slave
+FROM alpine
 
 RUN apk add --update \
     python3 \
