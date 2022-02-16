@@ -36,9 +36,9 @@ pipeline {
       steps {
         dir('api') {
           sh 'make build'
-        }
-        dir('web') {
-          sh 'make build'
+        // }
+        // dir('web') {
+        //   sh 'make build'
         }
       }
     }
@@ -62,38 +62,38 @@ pipeline {
     //     }
     stage('Push to Repo') {
             parallel {
-                stage('Push to api') {
+                stage('API') {
                     steps {
                       dir('api') {
                         sh 'make push'
                       }
                     }
                 }
-                stage('Push to web') {
-                    steps {
-                        dir('web') {
-                          sh 'make push'
-                        }
-                    }
-                }
+                // stage('WEB') {
+                //     steps {
+                //         dir('web') {
+                //           sh 'make push'
+                //         }
+                //     }
+                // }
             }
         }
     stage('Deploy to the EKS cluster') {
             parallel {
-                stage('Deploy api') {
+                stage('API') {
                     steps {
                       dir('api') {
                         sh 'make deploy'
                       }
                     }
                 }
-                stage('Deploy web') {
-                    steps {
-                        dir('web') {
-                          sh 'make deploy'
-                        }
-                    }
-                }
+                // stage('WEB') {
+                //     steps {
+                //         dir('web') {
+                //           sh 'make deploy'
+                //         }
+                //     }
+                // }
             }
         }
   }
