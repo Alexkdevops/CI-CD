@@ -1,7 +1,6 @@
 pipeline {
   agent {
     kubernetes {
-      idleMinutes 10
       defaultContainer 'jenkins-slave'
       yamlFile 'jenkins-slave.yaml'
     }
