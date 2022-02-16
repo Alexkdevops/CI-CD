@@ -7,9 +7,16 @@ then
     cd api/
     make deploy stage=main
     cd ..
+    cd web/
+    make deploy stage=main
+    cd ..
+
 elif [[ $BRANCH_NAME == prod ]]
 then
     cd api/
     make deploy stage=prod
     cd ..
+    cd web/
+    make deploy stage=prod
+    cd ..    
 fi
