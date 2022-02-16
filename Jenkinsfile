@@ -36,10 +36,10 @@ pipeline {
     stage('Build containers') {
       steps {
         dir('api') {
-          sh 'make build stage=${stage}'
+          sh 'make build'
         }
         dir('web') {
-          sh 'make build stage=${stage}'
+          sh 'make build'
         }
       }
     }
@@ -66,14 +66,14 @@ pipeline {
                 stage('Push api') {
                     steps {
                       dir('api') {
-                        sh 'make push stage=${stage}'
+                        sh 'make push'
                       }
                     }
                 }
                 stage('Push web') {
                     steps {
                         dir('web') {
-                          sh 'make push stage=${stage}'
+                          sh 'make push'
                         }
                     }
                 }
@@ -84,14 +84,14 @@ pipeline {
                 stage('Deploy api') {
                     steps {
                       dir('api') {
-                        sh 'make deploy stage=${stage}'
+                        sh 'make deploy'
                       }
                     }
                 }
                 stage('Deploy web') {
                     steps {
                         dir('web') {
-                          sh 'make deploy stage=${stage}'
+                          sh 'make deploy'
                         }
                     }
                 }
