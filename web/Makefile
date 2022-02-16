@@ -1,5 +1,6 @@
 acct = $(shell aws sts get-caller-identity --query "Account" --output text)
 image = $(acct).dkr.ecr.$(reg).amazonaws.com/$(repo):$(ver) 
+include stages/$(stage)
 
 login:
 	@aws ecr get-login-password --region $(reg) | docker login --username AWS --password-stdin $(acct).dkr.ecr.$(reg).amazonaws.com
