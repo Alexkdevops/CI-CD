@@ -1,7 +1,27 @@
-FROM debian:latest
+# build environment
+FROM node:8-alpine as react-build
+WORKDIR /app
+COPY . ./
+RUN yarn
+RUN yarn build
 
-RUN apt-get update
-RUN apt-get install nginx -y
-EXPOSE 80
-
+# server environment
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/conf.d/configfile.template
+ENV PORT 8080
+ENV HOST 0.0.0.0
+RUN sh -c "envsubst '\$PORT'  < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
+COPY --from=react-build /app/build /usr/share/nginx/html
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
+
+
+
+
+# FROM debian:latest
+
+# RUN apt-get update
+# RUN apt-get install nginx -y
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
