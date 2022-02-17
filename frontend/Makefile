@@ -5,6 +5,8 @@ include stages/$(stage)
 
 
 build:
+	@yarn
+	@yarn build
 	@docker build -t $(image) .
 
 push:
