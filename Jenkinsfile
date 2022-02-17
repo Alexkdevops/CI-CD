@@ -33,9 +33,9 @@ pipeline {
         dir('backend') {
           sh 'make build'
         }
-        dir('frontend') {
-          sh 'make build'
-        }
+        // dir('frontend') {
+        //   sh 'make build'
+        // }
       }
     }
     // stage('Run tests') {
@@ -65,13 +65,13 @@ pipeline {
                       }
                     }
                 }
-                stage('WEB') {
-                    steps {
-                        dir('frontend') {
-                          sh 'make push'
-                        }
-                    }
-                }
+                // stage('WEB') {
+                //     steps {
+                //         dir('frontend') {
+                //           sh 'make push'
+                //         }
+                //     }
+                // }
             }
         }
     stage('Deploy to the EKS cluster') {
@@ -83,13 +83,13 @@ pipeline {
                       }
                     }
                 }
-                stage('WEB') {
-                    steps {
-                        dir('backend') {
-                          sh 'make deploy'
-                        }
-                    }
-                }
+                // stage('WEB') {
+                //     steps {
+                //         dir('backend') {
+                //           sh 'make deploy'
+                //         }
+                //     }
+                // }
             }
         }
   }
