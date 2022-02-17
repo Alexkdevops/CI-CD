@@ -15,3 +15,9 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.1/b
 RUN chmod u+x kubectl && mv kubectl /bin/kubectl
 
 RUN apk --no-cache add nodejs yarn --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+
+RUN set -eux \
+    & apk add \
+        --no-cache \
+        nodejs \
+        yarn
