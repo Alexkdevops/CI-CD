@@ -1,3 +1,5 @@
+.PHONY: build
+
 acct = $(shell aws sts get-caller-identity --query "Account" --output text)
 image = $(acct).dkr.ecr.$(reg).amazonaws.com/$(repo):$(ver)
 stage = ${STAGE} 
