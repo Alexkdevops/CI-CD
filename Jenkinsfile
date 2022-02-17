@@ -30,10 +30,10 @@ pipeline {
     }
     stage('Container image build') {
       steps {
-        dir('api') {
+        dir('backend') {
           sh 'make build'
         // }
-        // dir('web') {
+        // dir('frontend') {
         //   sh 'make build'
         }
       }
@@ -60,14 +60,14 @@ pipeline {
             parallel {
                 stage('API') {
                     steps {
-                      dir('api') {
+                      dir('backend') {
                         sh 'make push'
                       }
                     }
                 }
                 // stage('WEB') {
                 //     steps {
-                //         dir('web') {
+                //         dir('frontend') {
                 //           sh 'make push'
                 //         }
                 //     }
@@ -78,14 +78,14 @@ pipeline {
             parallel {
                 stage('API') {
                     steps {
-                      dir('api') {
+                      dir('frontend') {
                         sh 'make deploy'
                       }
                     }
                 }
                 // stage('WEB') {
                 //     steps {
-                //         dir('web') {
+                //         dir('backend') {
                 //           sh 'make deploy'
                 //         }
                 //     }
