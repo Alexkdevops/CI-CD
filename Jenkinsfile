@@ -30,12 +30,12 @@ pipeline {
     }
     stage('Container image build') {
       steps {
-        dir('backend') {
-          sh 'make build'
-        }
-        // dir('frontend') {
+        // dir('backend') {
         //   sh 'make build'
         // }
+        dir('frontend') {
+          sh 'make build'
+        }
       }
     }
     // stage('Run tests') {
@@ -58,38 +58,38 @@ pipeline {
     //     }
     stage('Push to Repo') {
             parallel {
-                stage('API') {
+                // stage('API') {
+                //     steps {
+                //       dir('backend') {
+                //         sh 'make push'
+                //       }
+                //     }
+                }
+                stage('WEB') {
                     steps {
-                      dir('backend') {
-                        sh 'make push'
-                      }
+                        dir('frontend') {
+                          sh 'make push'
+                        }
                     }
                 }
-                // stage('WEB') {
-                //     steps {
-                //         dir('frontend') {
-                //           sh 'make push'
-                //         }
-                //     }
-                // }
             }
         }
     stage('Deploy to the EKS cluster') {
             parallel {
-                stage('API') {
-                    steps {
-                      dir('frontend') {
-                        sh 'make deploy'
-                      }
-                    }
-                }
-                // stage('WEB') {
+                // stage('API') {
                 //     steps {
-                //         dir('backend') {
-                //           sh 'make deploy'
-                //         }
+                //       dir('frontend') {
+                //         sh 'make deploy'
+                //       }
                 //     }
                 // }
+                stage('WEB') {
+                    steps {
+                        dir('backend') {
+                          sh 'make deploy'
+                        }
+                    }
+                }
             }
         }
   }
