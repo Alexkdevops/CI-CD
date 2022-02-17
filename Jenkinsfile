@@ -64,7 +64,7 @@ pipeline {
                 //         sh 'make push'
                 //       }
                 //     }
-                }
+                // }
                 stage('WEB') {
                     steps {
                         dir('frontend') {
